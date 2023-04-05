@@ -1,0 +1,3 @@
+{
+  "ignore": ["sessions/**", "uploads/**", "public/**", "views/**", "frontend/**", "data/**", "tools/**"]
+}

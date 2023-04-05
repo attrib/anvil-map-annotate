@@ -1,0 +1,11 @@
+node_modules
+sessions
+public/map
+data
+logs
+.git
+.dockerignore
+.gitignore
+.idea
+.env
+start.bash

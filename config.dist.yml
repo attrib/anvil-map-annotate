@@ -1,0 +1,35 @@
+access:
+  users: {}
+  roles: {}
+
+shard:
+  name: ''
+  url:
+
+discord:
+  key: ''
+  secret: ''
+
+basic:
+  url: http://localhost:3000
+  title: Anvil Empires
+  color: '#40362c'
+  faction: Remnant
+  links: []
+
+images:
+  favicon: /images/favicon.svg
+  faviconPng: /images/favicon.png
+  opengraph: /images/og.png
+  logo: /images/favicon.svg
+
+text:
+  login: "<p>To view the map, you need to join the <a
+    href=\"https://discord.gg/pEZs9MuDka\">Anvil Empire</a> discord.</p>\r\n"
+  accessDenied: "<p>You do not appear to be on the Anvil Empire discord server.</p>\r\n"
+  feedback: "<p>If you have Feedback please contact us via TBD.</p>\r
+
+    <p>Bugs can be reported at <a
+    href=\"https://github.com/attrib/anvil-map-annotate/issues\">github</a></\
+    p>\r\n"
+  contributors: "<p><a href=\"https://anvil.warden.express\">Hosting</a>: attrib</p>\r\n"

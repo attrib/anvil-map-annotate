@@ -1,0 +1,183 @@
+@import "~bootstrap/scss/bootstrap";
+@import "ol/ol.css";
+@import "ol-layerswitcher/src/ol-layerswitcher.css";
+@import "ol-ext/control/Search.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "tom-select/src/scss/tom-select.bootstrap5.scss";
+
+#map .layer-switcher {
+  top: 0.5em;
+  color: $black;
+}
+
+main {
+  position: relative;
+}
+
+#feature-info {
+  position: absolute;
+  width: 10%;
+  float: right;
+  top: 3rem;
+  right: 1.5rem;
+  min-width: 16rem;
+}
+
+#feature-info > div {
+  display: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.edit-buttons {
+  display: none;
+}
+
+div#mouse-position-content {
+  display: block;
+}
+
+.ol-control.selected button {
+  background-color: #cccccc;
+}
+
+.placementInfo .time, #mouse-position {
+  text-align: right;
+}
+
+.ts-wrapper .ts-control {
+  max-height: 3rem;
+  .item img {
+    margin-right: 5px;
+  }
+}
+button.overlay-button {
+  border-radius: 1rem;
+  font-size: 1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.form {
+  top: 11rem;
+  position: absolute;
+  left: 0.5rem;
+  border-radius: 4px;
+  width: 10%;
+  min-width: 20rem;
+}
+
+.info-box {
+  max-width: 17vw;
+  border-radius: 4px;
+}
+
+.info-box .clock-time {
+  margin-right: 5px;
+}
+
+.info-box .flag {
+  cursor: pointer;
+}
+
+.clock svg {
+  cursor: pointer;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+#global-alerts {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  width: 50%;
+}
+
+.layer-switcher  {
+  li input, .group button {
+    height: 1.5em;
+  }
+}
+
+.feature-search {
+  z-index: 10;
+  ul {
+    border-radius: 4px;
+  }
+}
+
+.tri-state-toggle {
+  label {
+    position: relative;
+    left: 8%;
+    width: 0;
+  }
+  input.remnant {
+    background-color: #407aaa;
+  }
+  input.ancients {
+    background-color: #a52927;
+  }
+  input.pagans {
+    background-color: #cfad63;
+  }
+  input {
+    width: 100%;
+    appearance: none;
+    background-color: black;
+    border-radius: 50px;
+    opacity: 0;
+  }
+  input:hover {
+    cursor: pointer;
+  }
+  input:checked {
+    opacity: 1;
+  }
+
+  display: flex;
+  justify-content: center;
+  border: 1px solid #f8f9fa;
+  border-radius: 50px;
+}
+
+#ppe-filter-content {
+  .accordion-body {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 1px;
+    .btn {
+      border: none;
+      border-radius: 0;
+      //outline: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+    }
+  }
+}
+
+#flagged {
+  overflow-wrap: anywhere;
+  word-wrap: anywhere;
+  word-break: break-all;
+  hyphens: auto;
+}
+
+#flagged thead, #flagged tbody td:nth-child(3) {
+  text-align: center;
+}
+
+.flagged-item {
+  align-items: center;
+  justify-content: space-between;
+
+  .icon img {
+    height: 24px;
+  }
+}
+
+#war-score {
+  display: none;
+  .team-score {
+    margin: 0 15px;
+  }
+}
+

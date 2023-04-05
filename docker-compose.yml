@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+
+  map:
+    image: "attribdd/anvil-map-annotate:master"
+    restart: always
+    volumes:
+      - ./map:/app/public/map
+      - ./sessions:/app/sessions
+      - ./data:/app/data
+    environment:
+      SECRET: sessionStorageSecret
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.map.rule=Host(`anvil.warden.express`)"
+      - "traefik.http.routers.map.entrypoints=websecure"
+      - "traefik.http.routers.map.tls.certresolver=le"

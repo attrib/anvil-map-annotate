@@ -1,0 +1,111 @@
+<div class="offcanvas offcanvas-start faction-background-color" tabindex="-1" id="sidebar"
+     aria-labelledby="sidebarLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarLabel">Edit Mode</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mb-2">
+            <div class="row text-center">
+                <div class="btn-group-lg btn-group" id="tool-buttons">
+                    <i class="btn bi bi-hexagon btn-outline-light" data-tool="polygon" title="Polygon"></i>
+                    <i class="btn bi bi-pencil btn-outline-light" data-tool="line" title="Line"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row mb-1 mt-2">
+                <label for="clan-input" class="col-sm-3 col-form-label">Builder</label>
+                <div class="col-sm-9">
+                    <input type="text" id="clan-input" name="clan" placeholder="Builder" class="clan form-control">
+                </div>
+            </div>
+            <div class="row align-items-center mb-2">
+                <label for="color-input" class="col-sm-3 col-form-label">Color</label>
+                <div class="col-sm-9">
+                    <input type="color" id="color-input" name="color" class="color form-control" value="#555555">
+                </div>
+            </div>
+            <div class="row align-items-center mb-2">
+                <label for="line-type-input" class="col-sm-3 col-form-label">Type</label>
+                <div class="col-sm-9">
+                    <select id="line-type-input" name="type" class="form-control">
+                        <option value="siding" selected>Siding</option>
+                        <option value="single">Main Line</option>
+                        <option value="lightRail">Narrow Gauge Rail</option>
+                        <option value="planned">Planned Line</option>
+                        <option value="water">Water Route</option>
+                        <option value="pipeline">Pipeline</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row align-items-center mb-2">
+                <label for="notes-input" class="col-sm-3 col-form-label">Notes</label>
+                <div class="col-sm-9">
+                    <textarea id="notes-input" name="notes" class="notes form-control"></textarea>
+                </div>
+            </div>
+            <div class="row mb-2" id="button-row">
+                <div class="btn-group col-sm-12">
+                    <input type="submit" id="delete-button" value="Delete" name="delete"
+                           class="submit col-sm-4 btn btn-danger">
+                    <input type="submit" id="save-button" value="Save" name="save"
+                           class="submit col-sm-4 btn btn-primary">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-2 mt-2 lh-lg">
+            <div class="tri-state-toggle" id="ppe-filter">
+                <label for="remnant-radio">Remnant</label>
+                <input class="button remnant" type="radio" name="toggle" id="remnant-radio" value="remnant-radio"
+                       checked />
+                <label for="ancients-radio">Ancients</label>
+                <input class="button ancients" type="radio" name="toggle" id="ancients-radio" value="ancients-radio" />
+                <label for="pagans-radio">Pagans</label>
+                <input class="button pagans" type="radio" name="toggle" id="pagans-radio" value="pagans-radio" />
+            </div>
+        </div>
+
+        <div class="accordion" id="ppe-filter-content">
+            <div class="accordion-item">
+<!--                <h4 class="accordion-header" id="information-collapse-heading">-->
+<!--                    <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
+<!--                            data-bs-target="#information-collapse" aria-expanded="true"-->
+<!--                            aria-controls="information-collapse">-->
+<!--                        Information-->
+<!--                    </button>-->
+<!--                </h4>-->
+                <div id="information-collapse" class="accordion-collapse collapse show"
+                     aria-labelledby="information-collapse-heading">
+                    <div class="accordion-body p-1">
+                        <div class="btn btn-outline-secondary">
+                            <img src="/images/information/information.svg" alt="Information" title="Information">
+                        </div>
+                        <div class="btn btn-outline-secondary">
+                            <img src="/images/information/warning.svg" alt="Warning" title="Warning">
+                        </div>
+                        <div class="btn btn-outline-secondary">
+                            <img src="/images/information/caution.svg" alt="Caution" title="Caution">
+                        </div>
+                        <div class="btn btn-outline-secondary">
+                            <img src="/images/information/danger.svg" alt="Danger" title="Danger">
+                        </div>
+                        <div class="btn btn-outline-secondary">
+                            <img src="/images/fields/axe.svg" alt="Resource Field" title="Resource Field">
+                        </div>
+                        <div class="btn btn-outline-secondary remnant-radio">
+                            <img src="/images/base/castle_remnant.svg" alt="Remnant Base" title="Remnant Base">
+                        </div>
+                        <div class="btn btn-outline-secondary ancients-radio">
+                            <img src="/images/base/castle_ancients.svg" alt="Ancients Base" title="Ancients Base">
+                        </div>
+                        <div class="btn btn-outline-secondary pagans-radio">
+                            <img src="/images/base/castle_pagans.svg" alt="Pagans Base" title="Pagans Base">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
