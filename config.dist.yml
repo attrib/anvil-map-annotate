@@ -12,16 +12,15 @@ discord:
 
 basic:
   url: http://localhost:3000
-  title: Anvil Empires
+  title: Anvil Empires Map
   color: '#40362c'
   faction: Remnant
   links: []
 
 images:
-  favicon: /images/favicon.svg
   faviconPng: /images/favicon.png
   opengraph: /images/og.png
-  logo: /images/favicon.svg
+  logo: /images/favicon.png
 
 text:
   login: "<p>To view the map, you need to join the <a

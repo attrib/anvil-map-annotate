@@ -48,21 +48,18 @@ export class EditTools {
         this.userId = document.getElementById('discord-username').dataset.userId;
         this.geoJson = new GeoJSON();
 
-        this.facilitiesGroup = new Group({
-            title: 'All Facilities',
-            fold: 'close',
-        })
-        this.map.addLayer(this.facilitiesGroup)
         this.iconTools = {
+            'fields': {
+                title: 'Resources',
+                type: 'fields',
+                zIndex: 25,
+                layerPerIcon: true,
+                declutter: true,
+            },
             'information': {
                 title: 'Information\'s',
                 type: 'information',
                 zIndex: 50,
-            },
-            'sign': {
-                title: 'Signs',
-                type: 'sign',
-                zIndex: 30,
             },
             'base': {
                 title: 'Bases',
@@ -70,31 +67,11 @@ export class EditTools {
                 zIndex: 30,
                 declutter: true,
             },
-            'facility': {
-                title: 'Public Facilities',
-                type: 'facility',
-                zIndex: 25,
-                layerGroup: this.facilitiesGroup,
-                layerPerIcon: true,
-            },
-            'facility-enemy': {
-                title: 'Enemy Structures',
-                type: 'facility-enemy',
-                zIndex: 10,
-                declutter: true,
-            },
-            'facility-private': {
-                title: 'Private Facilities',
-                type: 'facility-private',
-                zIndex: 15,
-                layerGroup: this.facilitiesGroup,
-                layerPerIcon: true,
-            },
         }
 
         this.sidebar = new Sidebar(this, map)
-        this.line = new Line(this, map)
         this.icon = new Icon(this, map)
+        this.line = new Line(this, map)
         this.polygon = new Polygon(this, map)
         this.select = new Select(this, map)
         this.edit = new Edit(this, map)
@@ -126,7 +103,7 @@ export class EditTools {
             this.editMode = newMode
             if (this.editMode) {
                 this.emit(this.EVENT_EDIT_MODE_ENABLED)
-                const editLayerTitles = [ 'Custom Areas', 'Train Lines', this.facilitiesGroup.get('title'), ...Object.keys(this.iconTools).map((key) => { return this.iconTools[key].title})]
+                const editLayerTitles = [ 'Custom Areas', 'Train Lines', ...Object.keys(this.iconTools).map((key) => { return this.iconTools[key].title})]
                 const nestVisibleTrue = (layer) => {
                     if (layer instanceof LayerGroup) {
                         layer.getLayers().forEach((subLayer) => { nestVisibleTrue(subLayer) })

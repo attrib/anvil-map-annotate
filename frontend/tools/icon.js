@@ -180,7 +180,7 @@ export class Icon {
         this.map.addInteraction(this.iconDraw)
       }
       this.selectedImage = image
-      const match = this.selectedImage.firstElementChild.src.match(/images\/(.*?)\/(.*?)\.(svg|png)/)
+      const match = this.selectedImage.firstElementChild.src.match(/images\/(.*?)\/(.*?)\.(svg|png|webp)/)
       this.featureType = match[1]
       this.featureIcon = match[2]
       if (this.tools.sidebar.editFeature) {
@@ -226,7 +226,8 @@ export class Icon {
   }
 
   getImageUrl = (feature) => {
-    return `/images/${feature.get('type')}/${feature.get('icon')}.svg`
+    const ending = (feature.get('type') === 'fields' || ['Ancients', 'Pagans', 'Remnants', 'chest'].includes(feature.get('icon'))) ? 'webp' : 'svg'
+    return `/images/${feature.get('type')}/${feature.get('icon')}.${ending}`
   }
 
   getIconTitle = (feature) => {

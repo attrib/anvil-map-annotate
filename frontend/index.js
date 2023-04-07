@@ -30,9 +30,9 @@ const map = new Map({
           source: new TileImage({
             attributions: '<a href="https://www.anvilempires.com" target="_blank">Siege Camp</a>',
             tileGrid: new TileGrid({
-              extent: [0,-2032,2508,0],
-              origin: [0,-2032],
-              resolutions: [16,8,4,2,1],
+              extent: [0,-4064,5016,0],
+              origin: [0,-4064],
+              resolutions: [32,16,8,4,2,1],
               tileSize: [256, 256]
             }),
             tileUrlFunction: function(tileCoord) {
@@ -47,10 +47,10 @@ const map = new Map({
     }),
   ],
   view: new View({
-    center: [url.searchParams.get('cx') ? parseFloat(url.searchParams.get('cx')) : 1254.000000, url.searchParams.get('cy') ? parseFloat(url.searchParams.get('cy')) : -1016.000000],
-    resolution: url.searchParams.get('r') ? parseFloat(url.searchParams.get('r')) : 10.000000,
+    center: [url.searchParams.get('cx') ? parseFloat(url.searchParams.get('cx')) : 2500.000000, url.searchParams.get('cy') ? parseFloat(url.searchParams.get('cy')) : -2032.000000],
+    resolution: url.searchParams.get('r') ? parseFloat(url.searchParams.get('r')) : 8.000000,
     minResolution: 0.25,
-    maxResolution: 4,
+    maxResolution: 8,
   })
 });
 

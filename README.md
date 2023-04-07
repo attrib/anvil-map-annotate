@@ -8,7 +8,10 @@ Please create a Ticket in GitHub. Or of any the discord where you maybe heard ab
 
 ## Todos
 
-* add new icons
+* save access control server
+* anonymous access
+* heatmap
+* add more new icons?
 * need to think about authentication
 * change all texts, write new help
 

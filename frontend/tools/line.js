@@ -16,29 +16,41 @@ export class Line {
    * @param {import("ol").Map} map
    */
   constructor(tools, map) {
-
     this.allLinesCollection = new Collection()
-    this.layerGroup = new Group({
-      title: 'Train Lines',
-      fold: 'close',
+    const sourceLine = new VectorSource({
+      features: this.allLinesCollection,
     });
-    map.addLayer(this.layerGroup);
-
-    this.allLinesCollection.on('add', (e) => {
-      const feature = e.element
-      const clan = feature.get('clan') || 'Unknown'
-      if (!(clan in this.sources)) {
-        this.createClanLayer(clan)
+    this.layer = new Vector({
+      source: sourceLine,
+      title: 'Lines',
+      style: (feature) => {
+        const clanLine = [
+          new Style({
+            stroke: new Stroke({
+              color: feature.get('color'),
+              width: this.getWidthOption(feature),
+              lineDash: this.getDashedOption(feature)
+            }),
+            geometry: this.geometryFunction
+          })
+        ]
+        if (feature.get('lineType') === 'lightRail') {
+          clanLine.push(
+            new Style({
+              stroke: new Stroke({
+                color: feature.get('color'),
+                width: 10,
+                lineDash: [1.5, 30],
+                lineCap: 'butt'
+              }),
+              geometry: this.geometryFunction
+            })
+          )
+        }
+        return clanLine
       }
-      this.sources[clan].addFeature(feature)
-    })
-    this.allLinesCollection.on('remove', (e) => {
-      const feature = e.element
-      const clan = feature.get('clan') || 'Unknown'
-      if (clan in this.sources) {
-        this.sources[clan].removeFeature(feature)
-      }
-    })
+    });
+    map.addLayer(this.layer);
 
     this.map = map
     this.tools = tools
@@ -325,44 +337,4 @@ export class Line {
         return undefined;
     }
   }
-
-  createClanLayer = (clan) => {
-    const sourceLine = new VectorSource({
-      features: new Collection(),
-    });
-
-    const vectorLine = new Vector({
-      source: sourceLine,
-      title: clan,
-      style: (feature) => {
-        const clanLine = [
-          new Style({
-            stroke: new Stroke({
-              color: feature.get('color'),
-              width: this.getWidthOption(feature),
-              lineDash: this.getDashedOption(feature)
-            }),
-            geometry: this.geometryFunction
-          })
-        ]
-        if (feature.get('lineType') === 'lightRail') {
-          clanLine.push(
-              new Style({
-                stroke: new Stroke({
-                  color: feature.get('color'),
-                  width: 10,
-                  lineDash: [1.5, 30],
-                  lineCap: 'butt'
-                }),
-                geometry: this.geometryFunction
-              })
-          )
-        }
-        return clanLine
-      }
-    });
-    this.layerGroup.getLayers().push(vectorLine);
-    this.sources[clan] = sourceLine
-  }
-
 }
