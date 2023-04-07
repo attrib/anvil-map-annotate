@@ -4,7 +4,7 @@ import {Stroke, Style} from "ol/style";
 import {LineString} from "ol/geom";
 import {createEditingStyle} from "ol/style/Style";
 import {Vector as VectorSource} from "ol/source";
-import {Group, Vector} from "ol/layer";
+import {Vector} from "ol/layer";
 import bezier from "@turf/bezier-spline";
 
 export class Line {

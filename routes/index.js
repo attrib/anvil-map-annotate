@@ -106,6 +106,7 @@ router.post('/admin/config', function(req, res, next) {
         config.config.access.discords[discordId] = {
           name: req.body.access.discords.name[i],
           hiddenCode: req.body.access.discords.hidden[i],
+          acl: req.body.access.discords.acl[i],
           roles: {}
         }
         if (req.body.access.discords[discordId]) {

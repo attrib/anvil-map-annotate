@@ -8,7 +8,6 @@ Please create a Ticket in GitHub. Or of any the discord where you maybe heard ab
 
 ## Todos
 
-* save access control server
 * anonymous access
 * heatmap
 * add more new icons?

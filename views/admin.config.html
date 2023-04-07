@@ -194,10 +194,20 @@
     <div class="col-sm-3">
         <input type="text" class="form-control discordId" name="access[discords][id][]" placeholder="Discord ID" value="{{ discordId }}">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <input type="text" class="form-control" name="access[discords][name][]" placeholder="Discord Server Name" value="{{ discord.name }}">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
+        <select name="access[discords][acl][]" class="form-select">
+            <option value="none" {% if discord.acl === 'none' %}selected{% endif %}>No general access</option>
+            <option value="read" {% if discord.acl === 'read' %}selected{% endif %}>Read</option>
+            <option value="icons" {% if discord.acl === 'icons' %}selected{% endif %}>Icons</option>
+            <option value="full" {% if discord.acl === 'full' %}selected{% endif %}>Full</option>
+            <option value="moderator" {% if discord.acl === 'moderator' %}selected{% endif %}>Moderator</option>
+            <option value="blocked" {% if discord.acl === 'blocked' %}selected{% endif %}>Blocked</option>
+        </select>
+    </div>
+    <div class="col-sm-2">
         <input type="text" class="form-control" name="access[discords][hidden][]" placeholder="Hidden Code" value="{{ discord.hiddenCode }}">
     </div>
     <button class="btn btn-danger col-sm-1 deleteRow">-</button>

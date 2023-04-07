@@ -1,7 +1,6 @@
 import {Edit} from "./tools/edit";
 import {ACL_READ, hasAccess} from "../lib/ACLS";
 import {Select} from "./tools/select";
-import {Group} from "ol/layer";
 import {GeoJSON} from "ol/format";
 import {Sidebar} from "./tools/sidebar";
 import {Icon} from "./tools/icon";
@@ -54,7 +53,6 @@ export class EditTools {
                 type: 'fields',
                 zIndex: 25,
                 layerPerIcon: true,
-                declutter: true,
             },
             'information': {
                 title: 'Information\'s',
@@ -65,7 +63,6 @@ export class EditTools {
                 title: 'Bases',
                 type: 'base',
                 zIndex: 30,
-                declutter: true,
             },
         }
 
