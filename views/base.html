@@ -65,16 +65,36 @@
                             </ul>
                             <div class="navbar-nav justify-content-end">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <div id="view-mode-switch" class="nav-link">
+                                            View Mode:
+                                            <input type="radio" id="view-mode-both" name="viewMode" value="both" checked>
+                                            <label class="form-check-label" for="view-mode-both">Both</label>
+                                            <input type="radio" id="view-mode-local" name="viewMode" value="local">
+                                            <label class="form-check-label" for="view-mode-local">Local</label>
+                                            <input type="radio" id="view-mode-global" name="viewMode" value="global">
+                                            <label class="form-check-label" for="view-mode-global">Global</label>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div id="edit-mode-switch" class="nav-link">
+                                            Edit Mode:
+                                            <input type="radio" id="edit-mode-local" name="editMode" value="local" checked>
+                                            <label class="form-check-label" for="edit-mode-local">Local</label>
+                                            <input type="radio" id="edit-mode-global" name="editMode" value="global" {% if not user %}disabled{% endif %}>
+                                            <label class="form-check-label" for="edit-mode-global" {% if not user %}title="Login to edit global map"{% endif %}>Global</label>
+                                        </div>
+                                    </li>
                                     <li class="nav-item{% if config.basic.links|length > 0 %} dropdown{% endif %}">
                                         {% if config.basic.links|length > 0 %}
-                                            <span id="warNumber" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ shard }} #{{ war }}{% if warStatus === 'prepare' %} (Preparing){% elseif warStatus === 'resistance' %} (Resistance){% endif %}</span>
+                                            <span id="warNumber" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-war="{{ war }}">#{{ war }}{% if warStatus === 'prepare' %} (Preparing){% elseif warStatus === 'resistance' %} (Resistance){% endif %}</span>
                                             <ul class="dropdown-menu">
                                                 {% for item in config.basic.links %}
                                                 <li><a class="dropdown-item" href="{{ item.href }}">{{ item.title }}</a></li>
                                                 {% endfor %}
                                             </ul>
                                         {% else %}
-                                            <span id="warNumber" class="nav-link{% if config.basic.links|length > 0 %} dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"{% else %}"{% endif %}>{{ shard }} #{{ war }}{% if warStatus === 'prepare' %} (Preparing){% elseif warStatus === 'resistance' %} (Resistance){% endif %}</span>
+                                            <span id="warNumber" class="nav-link{% if config.basic.links|length > 0 %} dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"{% else %}"{% endif %} data-war="{{ war }}">#{{ war }}{% if warStatus === 'prepare' %} (Preparing){% elseif warStatus === 'resistance' %} (Resistance){% endif %}</span>
                                         {% endif %}
                                     </li>
                                 </ul>

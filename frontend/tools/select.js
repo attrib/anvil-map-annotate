@@ -7,6 +7,7 @@ import {Collection, Feature, Overlay} from "ol";
 import {getTopLeft} from "ol/extent";
 import {Vector as VectorSource} from "ol/source";
 import {Vector} from "ol/layer";
+import {ACL_ACTIONS} from "../../lib/ACLS";
 
 
 const NO_TOOLTIP = ['Region', 'Major', 'Minor', 'voronoi', 'radius', 'grid']
@@ -112,8 +113,12 @@ export class Select {
         }
         if (event.selected.length > 0) {
           const type = event.selected[0].get('type')
-          if (type && tools.hasAccess(type + '.edit', event.selected[0])) {
+          if (type && (tools.hasAccess(ACL_ACTIONS.ICON_EDIT, event.selected[0]) || event.selected[0].get('local') === true)) {
             this.tools.emit(this.tools.EVENT_FEATURE_SELECTED(type), event.selected[0]);
+          }
+          else {
+            this.select.getFeatures().clear()
+            event.selected = []
           }
         }
       }
@@ -390,6 +395,12 @@ export class Select {
     }
     else {
       flag.classList.replace('bi-flag-fill', 'bi-flag')
+    }
+    if (feature.get('local') === true) {
+      flag.style.display = 'none'
+    }
+    else {
+      flag.style.display = ''
     }
   }
 

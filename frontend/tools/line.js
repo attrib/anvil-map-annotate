@@ -283,7 +283,7 @@ export class Line {
   }
 
   lineSelected = (feature) => {
-    if (!this.tools.hasAccess('track.edit', feature)) {
+    if (!this.tools.hasAccess('track.edit', feature) && !feature.get('local')) {
       this.tools.sidebar.displayForm(['notes'])
       return;
     }

@@ -8,9 +8,10 @@ const {hasAccess, ACL_ACTIONS, ACL_READ} = require("./lib/ACLS");
 const warapi = require('./lib/warapi')
 const eventLog = require('./lib/eventLog')
 const sanitizeHtml = require("sanitize-html");
-const {loadFeatures, saveFeatures} = require("./lib/featureLoader");
+const {loadFeatures, saveFeatures, loadHeatmap, saveHeatmap} = require("./lib/featureLoader");
 
 const features = loadFeatures()
+const heatMapFeatures = loadHeatmap()
 
 const sanitizeOptions = {
   allowedTags: [ 'b', 'i', 'em', 'strong', 'a', 'p', 'img', 'video', 'source' ],
@@ -221,6 +222,35 @@ wss.on('connection', function (ws, request) {
               saveFeatures(features)
             }
           }
+          break;
+
+        case 'heatMapFeature':
+          const heatFeature = message.data;
+          let type = heatFeature.properties.type;
+          if (heatFeature.properties.icon) {
+            type = type + '-' + heatFeature.properties.icon;
+          }
+          if (!(type in heatMapFeatures)) {
+            heatMapFeatures[type] = {
+              type: 'FeatureCollection',
+              features: []
+            };
+          }
+          heatFeature.properties.time = (new Date()).toISOString()
+          heatFeature.properties.weight = 1
+          delete heatFeature.id
+          delete heatFeature.properties.id
+          delete heatFeature.properties.notes
+          delete heatFeature.properties.color
+          delete heatFeature.properties.clan
+          delete heatFeature.properties.lineType
+          delete heatFeature.properties.user
+          delete heatFeature.properties.userId
+          delete heatFeature.properties.discordId
+          delete heatFeature.properties.muser
+          delete heatFeature.properties.muserId
+          heatMapFeatures[type].features.push(heatFeature);
+          saveHeatmap(heatMapFeatures, [type]);
           break;
       }
     });

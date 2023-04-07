@@ -146,6 +146,9 @@ export class Polygon {
   }
 
   style = (feature) => {
+    if ((feature.get('local') && this.tools.globalViewMode === this.tools.GLOBAL_MODE_GLOBAL) || (!feature.get('local') && this.tools.globalViewMode === this.tools.GLOBAL_MODE_LOCAL)) {
+      return new Style(null)
+    }
     if (feature.getGeometry().getType() === 'Polygon') {
       const notes = feature.get('notes') === undefined || this.tools.sidebar.editFeature === feature ? this.tools.sidebar.notesInput.value : feature.get('notes')
       const color = feature.get('color') === undefined || this.tools.sidebar.editFeature === feature ? this.tools.sidebar.colorInput.value + 'AA' : feature.get('color')
@@ -162,7 +165,7 @@ export class Polygon {
     if (this.active) {
       return
     }
-    if (!this.tools.hasAccess('icon.edit', feature)) {
+    if (!this.tools.hasAccess('icon.edit', feature) && !feature.get('local')) {
       this.tools.changeTool(false)
       return;
     }

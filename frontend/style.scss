@@ -154,6 +154,23 @@ button.overlay-button {
   }
 }
 
+#edit-mode-switch, #view-mode-switch {
+  input {
+    display: none;
+  }
+  input + label {
+    filter: brightness(80%);
+  }
+  input:checked + label {
+    filter: brightness(100%);
+    font-weight: bold;
+  }
+  input:disabled + label {
+    filter: brightness(50%);
+    cursor: not-allowed;
+  }
+}
+
 #flagged {
   overflow-wrap: anywhere;
   word-wrap: anywhere;

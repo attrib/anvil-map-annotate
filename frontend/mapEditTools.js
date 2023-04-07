@@ -9,6 +9,10 @@ import {Line} from "./tools/line";
 import LayerGroup from "ol/layer/Group";
 
 export class EditTools {
+    GLOBAL_MODE_LOCAL = 'local'
+    GLOBAL_MODE_GLOBAL = 'global'
+    GLOBAL_MODE_BOTH = 'both'
+
     EVENT_EDIT_MODE_ENABLED = 'editModeEnabled';
     EVENT_EDIT_MODE_DISABLED = 'editModeDisabled';
     EVENT_TOOL_SELECTED = 'toolSelected';
@@ -72,19 +76,42 @@ export class EditTools {
         this.polygon = new Polygon(this, map)
         this.select = new Select(this, map)
         this.edit = new Edit(this, map)
+
+        this.globalEditMode = this.GLOBAL_MODE_LOCAL
+        this.globalViewMode = this.GLOBAL_MODE_BOTH
+        document.getElementById('edit-mode-local').addEventListener('click', this.setGlobalEditMode)
+        document.getElementById('edit-mode-global').addEventListener('click', this.setGlobalEditMode)
+        document.getElementById('view-mode-both').addEventListener('click', this.setGlobalViewMode)
+        document.getElementById('view-mode-local').addEventListener('click', this.setGlobalViewMode)
+        document.getElementById('view-mode-global').addEventListener('click', this.setGlobalViewMode)
+    }
+
+    setGlobalViewMode = (event) => {
+        this.globalViewMode = event.srcElement.value
+        this.map.getLayers().forEach((layer) => {
+            if (layer instanceof LayerGroup) {
+                layer.getLayers().forEach((subLayer) => {
+                    subLayer.changed()
+                })
+            }
+            else {
+                layer.changed()
+            }
+        })
+    }
+
+    setGlobalEditMode = (event) => {
+        this.globalEditMode = event.srcElement.value
     }
 
     resetAcl = () => {
         this.acl = ACL_READ;
-        this.map.removeControl(this.edit.control)
         this.sidebar.setAcl(this.acl)
     }
 
     initAcl = (acl) => {
         this.acl = acl;
-        if (acl !== ACL_READ) {
-            this.map.addControl(this.edit.control)
-        }
+        this.map.addControl(this.edit.control)
         this.sidebar.setAcl(acl)
     }
 

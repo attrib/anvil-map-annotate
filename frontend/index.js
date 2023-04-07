@@ -11,6 +11,7 @@ import {all, noModifierKeys} from "ol/events/condition";
 import {assert} from "ol/asserts";
 import {Flags} from "./flags";
 import {EditTools} from "./mapEditTools";
+import LocalFeatureStorage from "./localFeatureStorage";
 
 const url = new URL(window.location);
 
@@ -113,19 +114,44 @@ socket.on('init', (data) => {
   }
 })
 
+const localFeatureStorage = new LocalFeatureStorage(tools)
+
 tools.on(tools.EVENT_ICON_ADDED, (icon) => {
-  socket.send('featureAdd', geoJson.writeFeatureObject(icon))
+  const data = geoJson.writeFeatureObject(icon)
+  if (tools.globalEditMode === tools.GLOBAL_MODE_LOCAL) {
+    localFeatureStorage.addFeature(icon)
+    // Sending feature to server to update heat map
+    socket.send('heatMapFeature', data)
+  }
+  else {
+    socket.send('featureAdd', data)
+    socket.send('heatMapFeature', data)
+  }
 })
 
 tools.on(tools.EVENT_ICON_UPDATED, (icon) => {
   if (icon && icon.get('id')) {
-    socket.send('featureUpdate', geoJson.writeFeatureObject(icon))
+    const data = geoJson.writeFeatureObject(icon)
+    if (tools.globalEditMode === tools.GLOBAL_MODE_LOCAL) {
+      localFeatureStorage.updateFeature(icon)
+      // Sending feature to server to update heat map
+      socket.send('heatMapFeature', data)
+    }
+    else {
+      socket.send('featureUpdate', data)
+      socket.send('heatMapFeature', data)
+    }
   }
 })
 
 tools.on(tools.EVENT_ICON_DELETED, (icon) => {
   if (icon && icon.get('id')) {
-    socket.send('featureDelete', {id: icon.get('id')})
+    if (tools.globalEditMode === tools.GLOBAL_MODE_LOCAL) {
+      localFeatureStorage.deleteFeature(icon.get('id'))
+    }
+    else {
+      socket.send('featureDelete', {id: icon.get('id')})
+    }
   }
 })
 
@@ -133,6 +159,13 @@ socket.on('allFeatures', (features) => {
   const col = geoJson.readFeatures(features)
   const collections = {}
   col.forEach((feature) => {
+    const type = feature.get('type')
+    if (!(type in collections)) {
+      collections[type] = []
+    }
+    collections[type].push(feature)
+  })
+  localFeatureStorage.getAllFeatures().forEach((feature) => {
     const type = feature.get('type')
     if (!(type in collections)) {
       collections[type] = []
@@ -186,12 +219,9 @@ tools.on(tools.EVENT_UNFLAG, (data) => {
 new Flags(map, tools)
 
 socket.on('warEnded', (data) => {
-  document.getElementById('warNumber').innerHTML = `${data.shard} #${data.warNumber} (Resistance)`
+  document.getElementById('warNumber').innerHTML = `#${data.warNumber} (Resistance)`
+  document.getElementById('warNumber').dataset.war = data.warNumber
   tools.resetAcl()
-  document.getElementById('resistance').classList.add(data.winner === 'WARDENS' ? 'alert-success' : 'alert-warning')
-  document.getElementById('resistance-winner').innerHTML = data.winner === 'WARDENS' ? 'Warden' : 'Colonial'
-  document.getElementById('resistance-' + data.winner).style.display = ''
-  document.getElementById('resistance').style.display = ''
 })
 
 socket.on('warPrepare', (data) => {
@@ -201,8 +231,9 @@ socket.on('warPrepare', (data) => {
   warFeatures.deactivatedRegions = []
   warFeatures.version = ''
   localStorage.setItem('warFeatures', JSON.stringify(warFeatures))
-  document.getElementById('warNumber').innerHTML = `${data.shard} #${data.warNumber} (Preparing)`
-  document.getElementById('resistance').style.display = 'none'
+  localFeatureStorage.clear()
+  document.getElementById('warNumber').innerHTML = `#${data.warNumber} (Preparing)`
+  document.getElementById('warNumber').dataset.war = data.warNumber
   if (realACL) {
     tools.initAcl(realACL)
   }
@@ -214,7 +245,9 @@ socket.on('warChange', (data) => {
   warFeatures.features = []
   warFeatures.deactivatedRegions = []
   warFeatures.version = ''
-  document.getElementById('warNumber').innerHTML = `${data.shard} #${data.warNumber}`
+  localFeatureStorage.clear()
+  document.getElementById('warNumber').innerHTML = `#${data.warNumber}`
+  document.getElementById('warNumber').dataset.war = data.warNumber
 })
 
 const disconnectedWarning = document.getElementById('disconnected')

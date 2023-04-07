@@ -214,6 +214,9 @@ export class Icon {
   }
 
   iconStyle = (feature) => {
+    if ((feature.get('local') && this.tools.globalViewMode === this.tools.GLOBAL_MODE_GLOBAL) || (!feature.get('local') && this.tools.globalViewMode === this.tools.GLOBAL_MODE_LOCAL)) {
+      return new Style(null)
+    }
     const src = this.getImageUrl(feature)
     if (!(src in this.iconStyleCache)) {
       this.iconStyleCache[src] = new Style({
@@ -237,7 +240,7 @@ export class Icon {
   }
 
   featureSelected = (feature) => {
-    if (!this.tools.hasAccess('icon.edit', feature)) {
+    if (!this.tools.hasAccess('icon.edit', feature) && !feature.get('local')) {
       this.tools.sidebar.displayForm(['notes'])
       this.unselectIcon()
       return;
