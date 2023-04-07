@@ -7,6 +7,7 @@ const config = require('../lib/config')
 const sanitizeHtml = require('sanitize-html')
 const eventlog = require('../lib/eventLog');
 const warapi = require('../lib/warapi');
+const {getHeatmapType} = require('../lib/featureLoader');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -167,5 +168,10 @@ router.get('/logout', function(req, res, next) {
     res.redirect('/');
   })
 });
+
+router.get('/api/heatmaps/:type', function(req, res, next) {
+  const data = getHeatmapType(req.params.type)
+  res.json(data)
+})
 
 module.exports = router;

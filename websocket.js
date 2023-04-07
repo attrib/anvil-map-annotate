@@ -42,6 +42,7 @@ wss.on('connection', function (ws, request) {
         version: process.env.COMMIT_HASH,
         warStatus: warapi.warData.status,
         featureHash: features.hash,
+        heatMaps: Object.keys(heatMapFeatures),
       }
     }));
 
@@ -235,6 +236,7 @@ wss.on('connection', function (ws, request) {
               type: 'FeatureCollection',
               features: []
             };
+            sendDataToAll('heatmaps.newType', type);
           }
           heatFeature.properties.time = (new Date()).toISOString()
           heatFeature.properties.weight = 1

@@ -8,7 +8,6 @@ Please create a Ticket in GitHub. Or of any the discord where you maybe heard ab
 
 ## Todos
 
-* heatmap
 * add more new icons?
 * need to think about authentication
 * change all texts, write new help

@@ -12,6 +12,7 @@ import {assert} from "ol/asserts";
 import {Flags} from "./flags";
 import {EditTools} from "./mapEditTools";
 import LocalFeatureStorage from "./localFeatureStorage";
+import HeatMaps from "./heatmaps";
 
 const url = new URL(window.location);
 
@@ -68,6 +69,7 @@ addDefaultMapControls(map)
 
 const warFeatures = localStorage.getItem('warFeatures') ? JSON.parse(localStorage.getItem('warFeatures')) : {version: '', features: [], deactivatedRegions: []}
 const conquerStatus = localStorage.getItem('conquerStatus') ? JSON.parse(localStorage.getItem('conquerStatus')) : {version: '', features: {}}
+const heatMap = new HeatMaps(map)
 const tools = new EditTools(map);
 enableLayerMemory(map)
 
@@ -99,6 +101,7 @@ const socket = new Socket();
 let lastClientVersion = null
 let lastFeatureHash = ''
 let realACL = null
+heatMap.setSocket(socket)
 socket.on('init', (data) => {
   realACL = data.acl
   if (data.warStatus === 'resistance') {
@@ -111,6 +114,9 @@ socket.on('init', (data) => {
   else if (lastClientVersion !== data.version) {
     console.log('Version change detected, reloading page')
     window.location = '/'
+  }
+  if (data.heatMaps) {
+    heatMap.initHeatMaps(data.heatMaps)
   }
 })
 
