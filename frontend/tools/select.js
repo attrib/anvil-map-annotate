@@ -11,7 +11,7 @@ import {Vector} from "ol/layer";
 
 const NO_TOOLTIP = ['Region', 'Major', 'Minor', 'voronoi', 'radius', 'grid']
 const NOT_SELECTABLE = [...NO_TOOLTIP, 'town', 'industry', 'field', 'ruler']
-const NO_USER_INFO = [...NOT_SELECTABLE, 'stormCannon']
+const NO_USER_INFO = [...NOT_SELECTABLE]
 const NO_CLOCK = [...NO_USER_INFO, 'sign']
 
 const RADIUS = {
@@ -323,18 +323,13 @@ export class Select {
           return [...trackStyleHighlight, ...trackStyle(feature, zoom)]
 
         case 'information':
-        case 'sign':
+        case 'fields':
         case 'base':
-        case 'facility':
-        case 'facility-private':
-        case 'facility-enemy':
           return [...circleStyle, this.tools.icon.iconStyle(feature, zoom)]
 
         case 'polygon':
           return [this.tools.polygon.style(feature, zoom), ...lineStyle]
 
-        case 'stormCannon':
-          return this.tools.staticLayer.iconStyle(feature, zoom)
       }
     }
   }

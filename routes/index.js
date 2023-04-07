@@ -136,7 +136,7 @@ router.post('/admin/config', function(req, res, next) {
 
 router.get('/login', async function(req, res, next) {
   if (req.session.grant === undefined) {
-    return res.redirect('/');
+    return res.render('login');
   }
   if (req.session.grant.error) {
     throw new Error(req.session.grant.error)

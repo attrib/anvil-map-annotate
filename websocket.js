@@ -4,7 +4,7 @@ const wss = new webSocket.Server({clientTracking: false, noServer: true});
 const clients = new Map();
 const fs = require('fs');
 const uuid = require('uuid')
-const {hasAccess, ACL_ACTIONS} = require("./lib/ACLS");
+const {hasAccess, ACL_ACTIONS, ACL_READ} = require("./lib/ACLS");
 const warapi = require('./lib/warapi')
 const eventLog = require('./lib/eventLog')
 const sanitizeHtml = require("sanitize-html");
@@ -27,13 +27,10 @@ const sanitizeOptionsClan = {
 };
 
 wss.on('connection', function (ws, request) {
-    if (!request.session.user || !request.session.userId) {
-      ws.close();
-    }
-    const username = request.session.user;
-    const userId = request.session.userId;
-    const discordId = request.session.discordId;
-    const acl = request.session.acl;
+    const username = request.session?.user;
+    const userId = request.session?.userId;
+    const discordId = request.session?.discordId;
+    const acl = request.session?.acl ? request.session?.acl : ACL_READ;
     const wsId = uuid.v4();
     clients.set(wsId, ws);
 
@@ -298,11 +295,6 @@ warapi.on(warapi.EVENT_WAR_UPDATED, ({newData}) => {
 module.exports = function (server) {
   server.on('upgrade', function (request, socket, head) {
     sessionParser(request, {}, () => {
-      if (!request.session.user) {
-        socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-        socket.destroy();
-        return;
-      }
       wss.handleUpgrade(request, socket, head, function (ws) {
         wss.emit('connection', ws, request);
       });

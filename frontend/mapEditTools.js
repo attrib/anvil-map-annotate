@@ -44,7 +44,7 @@ export class EditTools {
     constructor(map) {
         this.map = map
 
-        this.userId = document.getElementById('discord-username').dataset.userId;
+        this.userId = document.getElementById('discord-username')?.dataset.userId;
         this.geoJson = new GeoJSON();
 
         this.iconTools = {
