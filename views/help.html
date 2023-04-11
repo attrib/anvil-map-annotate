@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends baseTemplate %}
 
 {% block javascript %}
 <script>
@@ -102,7 +102,39 @@
 <div class="p-5 m-4 bg-light rounded-3 text-bg-light">
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Help</h1>
-        <p class="col-md-8 fs-4">This is a tool to help you annotate the map for the <a href="https://www.anvilempires.com/">Anvil Empires</a> game.</p>
+        <h2>FAQ</h2>
+        <dl>
+            <dt>Why anvil.warden.express?</dt>
+            <dd>
+                This is a temporary domain, till we notice that this could be a useful tool for the community.<br>
+                It uses the base work from the Foxhole Map warden.express, thats why it uses the same domain at the moment.<br>
+                We are looking for a domain name that is short, memorable, and easy to type.
+            </dd>
+
+            <dt>What is this?</dt>
+            <dd>
+                The main idea is to have a tool that allows you to mark locations on the map across sessions and share it with the community<br>
+                This is a work in progress, so expect bugs and missing features.
+            </dd>
+
+            <dt>What is local/global mode?</dt>
+            <dd>
+                Local mode is the default mode, it allows you to mark locations on the map. This is only visible to you.<br>
+                Global mode allows you to mark locations on the map, and is visible to everyone.<br>
+                You need to login via Discord to use the global mode.<br>
+                You can switch between the modes by clicking the local/global edit mode in the top right corner.
+            </dd>
+
+            <dt>Resource Heatmaps</dt>
+            <dd>
+                This is an experimental feature. We are trying to find a way to show the resource distribution on the map.<br>
+                This uses anonymized local data across all users and the global data.<br>
+                The local data is not stored on the server, it is only used to generate the resource heatmap.<br>
+                We try to determine where are hotspots for resources, and where are the dead zones.<br>
+                At the beginning this will be empty, as we need to collect data first.
+            </dd>
+
+        </dl>
 
         <h2 class="mt-4">Bugs/Issues/Feedback</h2>
         {{ config.text.feedback | safe }}

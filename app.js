@@ -69,6 +69,7 @@ app.use((req, res, next) => {
   res.locals.war = warapi.warData.warNumber
   res.locals.warStatus = warapi.warData.status
   res.locals.warConquestEndTime = warapi.warData.conquestEndTime || ''
+  res.locals.baseTemplate = req.query.raw ? 'raw.html' : 'base.html'
   if (req.session && (req.session.user || req.path === '/login')) {
     res.locals.user = req.session.user
     res.locals.userId = req.session.userId

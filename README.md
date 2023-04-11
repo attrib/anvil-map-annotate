@@ -29,8 +29,8 @@ Create the map tiles
 cd public
 mkdir map
 cd map
-wget https://cdn.discordapp.com/attachments/933535720767901777/1002752955361001492/AnvilMap.png
-docker run --rm -v `pwd`:/tmp/files osgeo/gdal gdal2tiles.py -p raster -w openlayers --tiledriver=WEBP --webp-lossless /tmp/files/AnvilMap.png /tmp/files/
+wget https://cdn.discordapp.com/attachments/933453697093103656/1095156754771349545/anvilmap111111.png -O entiremap.png
+docker run --rm -v `pwd`:/tmp/files osgeo/gdal gdal2tiles.py -p raster -w openlayers --tiledriver=WEBP --webp-lossless /tmp/files/entiremap.png /tmp/files/
 ```
 
 If you are using Windows Powershell and Docker on Windows
